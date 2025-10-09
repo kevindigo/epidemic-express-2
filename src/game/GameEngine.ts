@@ -290,6 +290,11 @@ export class GameEngine {
     
     if (count >= needCount) return true;
     
+    // PR Expert can cure with 3-of-a-kind
+    if (this.state.currentRole === Role.PREXPERT && count >= 3) {
+      return true;
+    }
+    
     // Scientist can cure with full house (3 of one + 2 of another)
     if (this.state.currentRole === Role.SCIENTIST) {
       if (count < 3) return false;
@@ -354,7 +359,7 @@ export class GameEngine {
     const descriptions = [
       'Avoid one disease level increase',
       'Get an extra treatment roll',
-      'Reduce panic on 3-of-a-kind',
+      'Cure disease with 3-of-a-kind',
       'Cure disease with Full House',
       'Re-roll Panics without penalty',
       'All disease levels increase'

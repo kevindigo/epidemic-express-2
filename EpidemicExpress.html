@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html dir="ltr">
+    
+    <head>
+        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dijit/themes/claro/claro.css"/>
+    </head>
+    
+    <body class=" claro ">
+        <div id='GamePanel' style="width: 300px">
+            <div id="Title" style="text-align: center; font-size: 18pt; font-weight: bold; border: 1px solid #ccc; ">
+                Epidemic Express
+            </div>
+            <div id="GameControlPanel" style="border: 1px solid #ccc; ">
+                <button id='Rules' type='button'>Rules</button>
+                <button id='NewGame' type='button'>New Game</button>
+            </div>
+            <div id="ScorePanel" style="border: 1px solid #ccc; ">
+                <table width='100%'>
+                <tr>
+                    <td valign='top'><b>Levels:</b></td>
+                    <td align='center'>
+                        <div style='position: relative;'>
+                        <span id='level0' style="position: absolute"></span>
+                        <img src='avian.png' width='30' height='30'></img>
+                        </div>
+                    </td>
+                    <td align='center'>
+                        <div style='position: relative;'>
+                        <span id='level1' style="position: absolute"></span>
+                        <img src='swine.png' width='30' height='30'></img>
+                        </div>
+                    </td>
+                    <td align='center'>
+                        <div style='position: relative;'>
+                        <span id='level2' style="position: absolute"></span>
+                        <img src='sars.png' width='30' height='30'></img>
+                        </div>
+                    </td>
+                    <td align='center'>
+                        <div style='position: relative;'>
+                        <span id='level3' style="position: absolute"></span>
+                        <img src='smallpox.png' width='30' height='30'></img>
+                        </div>
+                    </td>
+                    <td align='center'>
+                        <div style='position: relative;'>
+                        <span id='level4' style="position: absolute"></span>
+                        <img src='ebola.png' width='30' height='30'></img>
+                        </div>
+                    </td>
+                    <td width='5px'></td>
+                    <td align='right'>
+                        <div style='position: relative;'>
+                        <span id='level5' style="position: absolute"></span>
+                        <img src='panic.png' width='30' height='30'></img>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign='top'></td>
+                    <td align='center'>Avian</td>
+                    <td align='center'>Swine</td>
+                    <td align='center'>SARS</td>
+                    <td align='center'>S-pox</td>
+                    <td align='center'>Ebola</td>
+                    <td width='5px'></td>
+                    <td align='right'>Panic</td>
+                </tr>
+                </table>
+            </div>
+            <div id="RolePanel" style="border: 1px solid #ccc; ">
+                <table width='100%'>
+                <tr>
+                <td valign='top'><b>Current Role:</b></td>
+                <td valign='top' align='right'>
+                    <span id='CurrentRoleName'></span><br/>
+                    <span id='CurrentRoleDescription'></span>
+                </td>
+                <td valign='top' align='right'>
+                    <span id='CurrentRoleImage'></span>
+                </td>
+                </tr>
+                </table>
+            </div>
+            <div id="InfectionPanel" style="border: 1px solid #ccc; ">
+                <table width='100%'>
+                <tr>
+                <td valign='top'><b>Infection:</b></td>
+                <td align='right'>
+                <span id='Infection0'></span>
+                <span id='Infection1'></span>
+                <span id='Infection2'></span>
+                <span id='Infection3'></span>
+                <span id='Infection4'></span>
+                <span id='Infection5'></span>
+                <span id='Infection6'></span>
+                </td>
+                </tr>
+                <tr><td/><td align='right'><button id='ConfirmInfection' type='button'>OK</button></td></tr>
+                </table>
+            </div>
+            <div id="TreatmentPanel" style="border: 1px solid #ccc; ">
+                <table width='100%'>
+                <tr>
+                <td valign='top'><span id='TreatmentPrompt'><b>Treatment:</b></span></td>
+                <td align='left'>
+                <div style='position: relative;'>
+                <span id='TreatmentCross0' style="position: absolute"></span>
+                <span id='Treatment0'></span>
+                <span id='TreatmentCross1' style="position: absolute"></span>
+                <span id='Treatment1'></span>
+                <span id='TreatmentCross2' style="position: absolute"></span>
+                <span id='Treatment2'></span>
+                <span id='TreatmentCross3' style="position: absolute"></span>
+                <span id='Treatment3'></span>
+                <span id='TreatmentCross4' style="position: absolute"></span>
+                <span id='Treatment4'></span>
+                </div>
+                </td>
+                </tr>
+                <tr><td/><td align='left'><button id='ConfirmTreatment' type='button'>OK</button></td></tr>
+                </table>
+            </div>
+            <div id="MessagePanel" style="border: 1px solid #ccc; height: 100px">
+                <span id='UserMessage'></span>
+            </div>
+        </div>
+        <a href='http://boardgamegeek.com/boardgame/85804/epidemic-express'>Epidemic Express</a><br/>
+                Copyright 2010 by Kevin B. Smith<br/>
+                Art by Todd Sanders
+    </body>
+    <script type="text/javascript"
+        src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"
+        djConfig="parseOnLoad: true">
+    </script>
+    <script type="text/javascript" src="EpidemicExpress.js">
+    </script>
+</html>

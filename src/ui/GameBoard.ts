@@ -50,29 +50,70 @@ export class GameBoard {
   }
 
   private showRules(): void {
-    const rules = `
-      <h2>Epidemic Express Rules</h2>
-      <p><strong>Goal:</strong> Cure all 5 diseases before any reach level 6 or panic reaches level 6.</p>
-      
-      <h3>Turn Structure:</h3>
-      <ol>
-        <li><strong>Role Selection:</strong> Random role with special ability</li>
-        <li><strong>Infection Phase:</strong> Roll infection dice and apply effects</li>
-        <li><strong>Treatment Phase:</strong> Roll treatment dice and treat diseases</li>
-      </ol>
-      
-      <h3>Roles:</h3>
-      <ul>
-        <li><strong>Medic:</strong> Avoid one disease level increase</li>
-        <li><strong>Researcher:</strong> Get an extra treatment roll</li>
-        <li><strong>PR Expert:</strong> Reduce panic on 3-of-a-kind</li>
-        <li><strong>Scientist:</strong> Cure disease with Full House</li>
-        <li><strong>Epidemiologist:</strong> Re-roll Panics without penalty</li>
-        <li><strong>Bio-terrorist:</strong> All disease levels increase</li>
-      </ul>
+    const rulesModal = document.createElement('div');
+    rulesModal.className = 'rules-modal';
+    rulesModal.innerHTML = `
+      <div class="rules-modal-content">
+        <div class="rules-header">
+          <h2>Epidemic Express Rules</h2>
+          <button class="rules-close-btn">&times;</button>
+        </div>
+        <div class="rules-body">
+          <p><strong>Goal:</strong> Cure all 5 diseases before any reach level 6 or panic reaches level 6.</p>
+          
+          <h3>Turn Structure:</h3>
+          <ol>
+            <li><strong>Role Selection:</strong> Random role with special ability</li>
+            <li><strong>Infection Phase:</strong> Roll infection dice and apply effects</li>
+            <li><strong>Treatment Phase:</strong> Roll treatment dice and treat diseases</li>
+          </ol>
+          
+          <h3>Roles:</h3>
+          <ul>
+            <li><strong>Medic:</strong> Avoid one disease level increase</li>
+            <li><strong>Researcher:</strong> Get an extra treatment roll</li>
+            <li><strong>PR Expert:</strong> Cure disease with 3-of-a-kind</li>
+            <li><strong>Scientist:</strong> Cure disease with Full House</li>
+            <li><strong>Epidemiologist:</strong> Re-roll Panics without penalty</li>
+            <li><strong>Bio-terrorist:</strong> All disease levels increase</li>
+          </ul>
+          
+          <h3>Game Mechanics:</h3>
+          <ul>
+            <li><strong>Infection Phase:</strong> Roll dice equal to infection rate, apply disease increases</li>
+            <li><strong>Treatment Phase:</strong> Roll 5 dice, save dice you want to keep, re-roll others</li>
+            <li><strong>Panic:</strong> Increases when 3+ panic dice appear in infection phase</li>
+            <li><strong>Curing Diseases:</strong> Need 4-of-a-kind (3-of-a-kind for PR Expert, Full House for Scientist)</li>
+            <li><strong>Re-rolls:</strong> Researcher gets 2 re-rolls, others get 1</li>
+          </ul>
+        </div>
+      </div>
     `;
     
-    alert(rules);
+    // Add modal to the container
+    this.container.appendChild(rulesModal);
+    
+    // Add event listeners
+    const closeBtn = rulesModal.querySelector('.rules-close-btn') as HTMLElement;
+    closeBtn.addEventListener('click', () => {
+      this.container.removeChild(rulesModal);
+    });
+    
+    // Close modal when clicking outside content
+    rulesModal.addEventListener('click', (e) => {
+      if (e.target === rulesModal) {
+        this.container.removeChild(rulesModal);
+      }
+    });
+    
+    // Close modal with Escape key
+    const handleKeydown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        this.container.removeChild(rulesModal);
+        document.removeEventListener('keydown', handleKeydown);
+      }
+    };
+    document.addEventListener('keydown', handleKeydown);
   }
 
   private render(): void {

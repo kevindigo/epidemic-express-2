@@ -339,6 +339,119 @@ body {
   100% { transform: scale(1.05); }
 }
 
+/* Rules Modal */
+.rules-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.rules-modal-content {
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.3s ease;
+}
+
+.rules-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rules-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.rules-close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.rules-close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.rules-body {
+  padding: 30px;
+}
+
+.rules-body h3 {
+  color: #2c3e50;
+  margin: 25px 0 15px 0;
+  font-size: 1.2rem;
+  border-bottom: 2px solid #ecf0f1;
+  padding-bottom: 8px;
+}
+
+.rules-body h3:first-child {
+  margin-top: 0;
+}
+
+.rules-body p {
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.rules-body ol,
+.rules-body ul {
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+.rules-body li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.rules-body strong {
+  color: #2c3e50;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .game-container {
@@ -376,6 +489,15 @@ body {
     padding: 10px 20px;
     font-size: 0.9rem;
   }
+  
+  .rules-modal-content {
+    width: 95%;
+    max-height: 85vh;
+  }
+  
+  .rules-body {
+    padding: 20px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -389,5 +511,21 @@ body {
   
   .game-header {
     padding: 15px;
+  }
+  
+  .rules-header {
+    padding: 15px;
+  }
+  
+  .rules-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .rules-body {
+    padding: 15px;
+  }
+  
+  .rules-body h3 {
+    font-size: 1.1rem;
   }
 }

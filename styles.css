@@ -103,7 +103,7 @@ body {
 .disease-item {
   text-align: center;
   padding: 8px;
-  background: #f8f9fa;
+  background: transparent;
   border-radius: 8px;
   transition: transform 0.2s ease;
 }
@@ -115,6 +115,7 @@ body {
 .disease-icon {
   position: relative;
   margin-bottom: 5px;
+  display: inline-block;
 }
 
 .disease-icon img {
@@ -128,8 +129,8 @@ body {
   position: absolute;
   top: -5px;
   right: -5px;
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   background: white;
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -139,15 +140,15 @@ body {
   position: absolute;
   top: -5px;
   right: -5px;
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   background: #e74c3c;
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: bold;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }

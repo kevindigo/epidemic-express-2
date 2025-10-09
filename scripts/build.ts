@@ -48,7 +48,6 @@ async function copyStaticAssets(): Promise<void> {
     { src: "styles.css", dest: "dist/styles.css" },
     { src: "manifest.json", dest: "dist/manifest.json" },
     { src: "assets", dest: "dist/assets" },
-    { src: "epidemiologist.png", dest: "dist/epidemiologist.png" },
   ];
   
   for (const asset of assetsToCopy) {

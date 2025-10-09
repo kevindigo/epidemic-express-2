@@ -202,7 +202,7 @@ body {
 }
 
 .role-description {
-  color: #7f8c8d;
+  color: #000000;
   font-size: 0.95rem;
 }
 
@@ -213,6 +213,13 @@ body {
   gap: 8px;
   flex-wrap: wrap;
   margin-bottom: 15px;
+}
+
+/* Infection and Treatment Panel Buttons */
+.infection-panel .btn,
+.treatment-panel .btn {
+  display: block;
+  margin: 0 auto;
 }
 
 .die {
@@ -326,7 +333,7 @@ body {
 /* Treatment hint */
 .treatment-hint {
   text-align: center;
-  color: #7f8c8d;
+  color: #000000;
   font-size: 0.9rem;
   margin-top: 8px;
   font-style: italic;

@@ -39,6 +39,7 @@ export interface GameState {
   infectionDice: Disease[];
   treatmentDice: Disease[];
   savedTreatmentDice: boolean[];
+  lockedTreatmentDice: boolean[]; // dice that cannot be unsaved (e.g., panic dice with penalty)
   hasWon: boolean;
   hasLost: boolean;
   message: string;

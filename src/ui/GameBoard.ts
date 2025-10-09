@@ -44,6 +44,12 @@ export class GameBoard {
           setTimeout(() => {
             treatmentDie.classList.remove('selected');
           }, 300);
+        } else if (treatmentDie && treatmentDie.classList.contains('locked')) {
+          // Show visual feedback for locked dice
+          treatmentDie.classList.add('selected');
+          setTimeout(() => {
+            treatmentDie.classList.remove('selected');
+          }, 300);
         }
       }
     });
@@ -221,14 +227,30 @@ export class GameBoard {
       <div class="panel treatment-panel">
         <h3>Treatment Phase</h3>
         <div class="dice-container">
-          ${state.treatmentDice.map((die: Disease, index: number) => `
-            <div class="die treatment-die ${state.savedTreatmentDice[index] ? 'saved' : ''} ${state.rerollsRemaining > 0 ? 'clickable' : ''}" 
-                 data-die-index="${index}"
-                 title="${state.savedTreatmentDice[index] ? 'Click to unsave for re-roll' : 'Click to save from re-roll'}">
-              <img src="assets/images/${this.game.getDiseaseImage(die)}" alt="${this.game.getDiseaseName(die)}" />
-              ${state.savedTreatmentDice[index] ? '<img src="assets/images/checkmark.png" class="checkmark" alt="Saved" />' : ''}
-            </div>
-          `).join('')}
+          ${state.treatmentDice.map((die: Disease, index: number) => {
+            const isLocked = state.lockedTreatmentDice[index];
+            const isSaved = state.savedTreatmentDice[index];
+            const isClickable = state.rerollsRemaining > 0 && !isLocked;
+            let title = '';
+            
+            if (isLocked) {
+              title = 'Locked panic die - cannot be unsaved';
+            } else if (isSaved) {
+              title = 'Click to unsave for re-roll';
+            } else {
+              title = 'Click to save from re-roll';
+            }
+            
+            return `
+              <div class="die treatment-die ${isSaved ? 'saved' : ''} ${isLocked ? 'locked' : ''} ${isClickable ? 'clickable' : ''}" 
+                   data-die-index="${index}"
+                   title="${title}">
+                <img src="assets/images/${this.game.getDiseaseImage(die)}" alt="${this.game.getDiseaseName(die)}" />
+                ${isSaved ? '<img src="assets/images/checkmark.png" class="checkmark" alt="Saved" />' : ''}
+                ${isLocked ? '<div class="lock" title="Locked"></div>' : ''}
+              </div>
+            `;
+          }).join('')}
         </div>
         <button id="confirm-treatment-btn" class="btn btn-primary">${rerollsText}</button>
         <p class="treatment-hint">Click dice to save/unsave them for re-rolls</p>

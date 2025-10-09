@@ -32,6 +32,7 @@ export class GameEngine {
       infectionDice: [],
       treatmentDice: [],
       savedTreatmentDice: [false, false, false, false, false],
+      lockedTreatmentDice: [false, false, false, false, false],
       hasWon: false,
       hasLost: false,
       message: 'Welcome to Epidemic Express!'
@@ -85,6 +86,7 @@ export class GameEngine {
     this.state.currentRole = Math.floor(Math.random() * 6) as Role;
     this.state.rerollsRemaining = this.getRerollsAllowed();
     this.state.gamePhase = 'infection';
+    this.state.lockedTreatmentDice = [false, false, false, false, false];
     this.rollInfection();
     this.state.message = `You are the ${this.getRoleName(this.state.currentRole)}`;
     this.notifyListeners();
@@ -178,6 +180,9 @@ export class GameEngine {
 
   // Roll treatment dice
   rollTreatment(): void {
+    // Reset locked dice at the start of each roll
+    this.state.lockedTreatmentDice = [false, false, false, false, false];
+    
     for (let i = 0; i < 5; i++) {
       if (!this.state.savedTreatmentDice[i]) {
         // Penalty for re-rolling panics (except for epidemiologist)
@@ -190,9 +195,10 @@ export class GameEngine {
         
         this.state.treatmentDice[i] = Math.floor(Math.random() * 6) as Disease;
         
-        // Auto-save panic dice if penalty applies
+        // Auto-save and lock panic dice if penalty applies
         if (penaltyForRerolling && this.state.treatmentDice[i] === Disease.PANIC) {
           this.state.savedTreatmentDice[i] = true;
+          this.state.lockedTreatmentDice[i] = true;
         }
       }
     }
@@ -204,6 +210,13 @@ export class GameEngine {
   // Toggle save state for a treatment die
   toggleSaveDie(dieIndex: number): void {
     if (this.state.rerollsRemaining <= 0) return;
+    
+    // Prevent unsaving locked dice (e.g., panic dice with penalty)
+    if (this.state.lockedTreatmentDice[dieIndex] && !this.state.savedTreatmentDice[dieIndex]) {
+      this.state.message = 'Cannot unsave locked panic die!';
+      this.notifyListeners();
+      return;
+    }
     
     this.state.savedTreatmentDice[dieIndex] = !this.state.savedTreatmentDice[dieIndex];
     const action = this.state.savedTreatmentDice[dieIndex] ? 'Saving' : 'Rerolling';

@@ -284,6 +284,56 @@ body {
   border: 3px solid #27ae60;
 }
 
+.treatment-die.locked {
+  border: 2px solid #e74c3c;
+  background-color: rgba(231, 76, 60, 0.05);
+  cursor: not-allowed;
+  position: relative;
+}
+
+.treatment-die.locked:hover {
+  border-color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.08);
+  cursor: not-allowed;
+}
+
+.lock {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 12px;
+  height: 12px;
+  background-color: #2c3e50;
+  border: 1px solid white;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.lock::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 4px;
+  background-color: #2c3e50;
+  border: 1px solid white;
+  border-radius: 3px 3px 0 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Subtle pulse animation for locked dice */
+@keyframes lock-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.treatment-die.locked .lock {
+  animation: lock-pulse 2s ease-in-out infinite;
+}
+
 .checkmark {
   position: absolute;
   top: -5px;

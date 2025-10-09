@@ -222,14 +222,46 @@ body {
   border: 3px solid transparent;
 }
 
-.treatment-die.saved {
-  border-color: #27ae60;
+.treatment-die.clickable:not(.saved) {
+  border: 3px dashed #3498db;
+  background-color: rgba(52, 152, 219, 0.05);
+}
+
+.treatment-die.clickable:not(.saved):hover {
+  border: 3px solid #3498db;
+  background-color: rgba(52, 152, 219, 0.15);
   transform: scale(1.05);
 }
 
-.treatment-die:hover {
+.treatment-die.clickable.selected {
+  border: 3px solid #f39c12;
+  background-color: rgba(243, 156, 18, 0.15);
+  transform: scale(1.05);
+  box-shadow: 0 0 0 2px #f39c12, 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.treatment-die.saved {
+  border-color: #27ae60;
+  transform: scale(1.05);
+  box-shadow: 0 0 0 3px #27ae60, 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: rgba(39, 174, 96, 0.1);
+  animation: saved-pulse 0.5s ease;
+}
+
+.treatment-die.clickable:hover:not(.selected) {
   transform: scale(1.1);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-color: #2980b9;
+  background-color: rgba(52, 152, 219, 0.1);
+}
+
+.treatment-die.clickable {
+  cursor: pointer;
+  border: 3px dashed #3498db;
+}
+
+.treatment-die.clickable.saved {
+  border: 3px solid #27ae60;
 }
 
 .checkmark {
@@ -301,6 +333,12 @@ body {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }
   100% { transform: scale(1); }
+}
+
+@keyframes saved-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1.05); }
 }
 
 /* Responsive Design */

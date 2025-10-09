@@ -9,7 +9,6 @@ export class GameBoard {
     this.game = new GameEngine();
     this.container = container;
     this.setupEventListeners();
-    this.render();
     
     // Subscribe to game state changes
     this.game.subscribe(() => this.render());
@@ -33,9 +32,19 @@ export class GameBoard {
         this.game.applyInfection();
       } else if (target.id === 'confirm-treatment-btn') {
         this.game.confirmTreatment();
-      } else if (target.classList.contains('treatment-die')) {
-        const dieIndex = parseInt(target.dataset['dieIndex'] || '0');
-        this.game.toggleSaveDie(dieIndex);
+      } else {
+        // Find the treatment die element (could be the target or its parent)
+        const treatmentDie = target.closest('.treatment-die') as HTMLElement;
+        if (treatmentDie && treatmentDie.classList.contains('clickable')) {
+          const dieIndex = parseInt(treatmentDie.dataset['dieIndex'] || '0');
+          this.game.toggleSaveDie(dieIndex);
+          
+          // Add temporary selection highlight
+          treatmentDie.classList.add('selected');
+          setTimeout(() => {
+            treatmentDie.classList.remove('selected');
+          }, 300);
+        }
       }
     });
   }
@@ -172,8 +181,9 @@ export class GameBoard {
         <h3>Treatment Phase</h3>
         <div class="dice-container">
           ${state.treatmentDice.map((die: Disease, index: number) => `
-            <div class="die treatment-die ${state.savedTreatmentDice[index] ? 'saved' : ''}" 
-                 data-die-index="${index}">
+            <div class="die treatment-die ${state.savedTreatmentDice[index] ? 'saved' : ''} ${state.rerollsRemaining > 0 ? 'clickable' : ''}" 
+                 data-die-index="${index}"
+                 title="${state.savedTreatmentDice[index] ? 'Click to unsave for re-roll' : 'Click to save from re-roll'}">
               <img src="assets/images/${this.game.getDiseaseImage(die)}" alt="${this.game.getDiseaseName(die)}" />
               ${state.savedTreatmentDice[index] ? '<img src="assets/images/checkmark.png" class="checkmark" alt="Saved" />' : ''}
             </div>

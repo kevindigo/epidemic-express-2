@@ -106,6 +106,10 @@ body {
   background: transparent;
   border-radius: 8px;
   transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .disease-item:hover {
@@ -114,8 +118,10 @@ body {
 
 .disease-icon {
   position: relative;
-  margin-bottom: 5px;
-  display: inline-block;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .disease-icon img {
@@ -161,6 +167,10 @@ body {
   font-size: 0.9rem;
   font-weight: 600;
   color: #2c3e50;
+  text-align: center;
+  line-height: 1.2;
+  margin-top: 0;
+  width: 100%;
 }
 
 /* Role Panel */
@@ -472,6 +482,15 @@ body {
     grid-template-columns: repeat(3, 1fr);
   }
   
+  .disease-item {
+    padding: 6px;
+  }
+  
+  .disease-icon img {
+    width: 45px;
+    height: 45px;
+  }
+  
   .role-info {
     flex-direction: column;
     text-align: center;
@@ -504,6 +523,19 @@ body {
 @media (max-width: 480px) {
   .disease-panel .disease-levels {
     grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .disease-item {
+    padding: 5px;
+  }
+  
+  .disease-icon img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .disease-name {
+    font-size: 0.8rem;
   }
   
   .panel {

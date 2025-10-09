@@ -306,27 +306,19 @@ body {
   justify-content: center;
 }
 
-.victory-message {
+.message-content.victory-message {
   background: #27ae60;
   color: white;
-  padding: 12px;
-  border-radius: 8px;
-  text-align: center;
   font-size: 1.3rem;
   font-weight: bold;
-  margin-top: 8px;
   animation: pulse 2s infinite;
 }
 
-.defeat-message {
+.message-content.defeat-message {
   background: #e74c3c;
   color: white;
-  padding: 12px;
-  border-radius: 8px;
-  text-align: center;
   font-size: 1.3rem;
   font-weight: bold;
-  margin-top: 8px;
 }
 
 /* Treatment hint */

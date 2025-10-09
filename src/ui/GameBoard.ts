@@ -237,12 +237,21 @@ export class GameBoard {
   }
 
   private renderMessagePanel(state: GameState): string {
+    let messageClass = 'message-content';
+    let messageContent = state.message;
+    
+    if (state.hasWon) {
+      messageClass += ' victory-message';
+      messageContent = '🎉 You have won! 🎉';
+    } else if (state.hasLost) {
+      messageClass += ' defeat-message';
+      messageContent = '💀 Game Over 💀';
+    }
+    
     return `
       <div class="panel message-panel">
         <h3>Game Message</h3>
-        <div class="message-content">${state.message}</div>
-        ${state.hasWon ? '<div class="victory-message">🎉 You have won! 🎉</div>' : ''}
-        ${state.hasLost ? '<div class="defeat-message">💀 Game Over 💀</div>' : ''}
+        <div class="${messageClass}">${messageContent}</div>
       </div>
     `;
   }

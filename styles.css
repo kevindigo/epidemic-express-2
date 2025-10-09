@@ -266,13 +266,11 @@ body {
 
 .checkmark {
   position: absolute;
-  top: -8px;
-  right: -8px;
-  width: 20px;
-  height: 20px;
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  top: -5px;
+  right: -5px;
+  width: 15px;
+  height: 15px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Message Panel */

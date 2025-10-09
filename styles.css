@@ -497,9 +497,24 @@ body {
     height: 45px;
   }
   
+  /* Keep role panel horizontal layout on narrow screens */
   .role-info {
-    flex-direction: column;
-    text-align: center;
+    flex-direction: row;
+    text-align: left;
+    gap: 10px;
+  }
+  
+  .role-image img {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .role-name {
+    font-size: 1.1rem;
+  }
+  
+  .role-description {
+    font-size: 0.9rem;
   }
   
   .dice-container {
@@ -547,6 +562,26 @@ body {
   
   .disease-name {
     font-size: 0.8rem;
+  }
+  
+  /* Keep role panel horizontal layout on very narrow screens */
+  .role-info {
+    flex-direction: row;
+    text-align: left;
+    gap: 8px;
+  }
+  
+  .role-image img {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .role-name {
+    font-size: 1rem;
+  }
+  
+  .role-description {
+    font-size: 0.85rem;
   }
   
   .panel {

@@ -95,14 +95,15 @@ body {
 
 /* Disease Panel */
 .disease-panel .disease-levels {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 8px;
+  display: flex;
+  justify-content: space-between;
+  gap: 2px;
+  flex-wrap: wrap;
 }
 
 .disease-item {
   text-align: center;
-  padding: 8px;
+  padding: 2px;
   background: transparent;
   border-radius: 8px;
   transition: transform 0.2s ease;
@@ -110,6 +111,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  flex: 1;
+  min-width: 0;
 }
 
 .disease-item:hover {
@@ -118,7 +121,7 @@ body {
 
 .disease-icon {
   position: relative;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -479,11 +482,16 @@ body {
   }
   
   .disease-panel .disease-levels {
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    justify-content: space-between;
+    gap: 2px;
+    flex-wrap: wrap;
   }
   
   .disease-item {
-    padding: 6px;
+    padding: 2px;
+    flex: 1;
+    min-width: 0;
   }
   
   .disease-icon img {
@@ -522,11 +530,16 @@ body {
 
 @media (max-width: 480px) {
   .disease-panel .disease-levels {
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    justify-content: space-between;
+    gap: 2px;
+    flex-wrap: wrap;
   }
   
   .disease-item {
-    padding: 5px;
+    padding: 2px;
+    flex: 1;
+    min-width: 0;
   }
   
   .disease-icon img {

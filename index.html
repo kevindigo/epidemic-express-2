@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epidemic Express - PWA</title>
+    <meta name="description" content="A modern PWA version of the Epidemic Express dice game">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#2c3e50">
+    
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Epidemic Express">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" href="assets/images/board.png">
+    <link rel="apple-touch-icon" href="assets/images/board.png">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Game will be rendered here by TypeScript -->
+        <div class="loading">Loading Epidemic Express...</div>
+    </div>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+
+    <!-- Main Application Script -->
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

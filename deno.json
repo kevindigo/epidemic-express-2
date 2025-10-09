@@ -1,0 +1,58 @@
+{
+  "tasks": {
+    "dev": "deno run --allow-net --allow-read --allow-run scripts/dev.ts",
+    "build": "deno run --allow-read --allow-write --allow-run --allow-net scripts/build.ts",
+    "build-esbuild": "deno run -A esbuild.config.js build",
+    "build-watch": "deno run -A esbuild.config.js watch",
+    "build-production": "deno run -A esbuild.config.js production",
+    "test-build": "deno run -A test-build.js",
+    "serve": "deno run --allow-net --allow-read scripts/serve.ts",
+    "test": "deno run --allow-read --allow-run scripts/test.ts",
+    "lint": "deno run --allow-read --allow-run scripts/lint.ts",
+    "format": "deno run --allow-read --allow-write --allow-run scripts/format.ts",
+    "typecheck": "deno check src/",
+    "clean": "deno run --allow-read --allow-write scripts/clean.ts",
+    "bundle": "deno run --allow-read --allow-write --allow-net scripts/build.ts",
+    "bundle-sw": "echo 'Service worker bundling is now part of the main build process'"
+  },
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "deno.ns", "es2022"],
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true
+  },
+  "lint": {
+    "rules": {
+      "tags": ["recommended"],
+      "include": ["camelcase", "explicit-function-return-type"],
+      "exclude": ["no-unused-vars"]
+    },
+    "include": ["src/", "scripts/", "*.ts"],
+    "exclude": ["dist/", "node_modules/"]
+  },
+  "fmt": {
+    "include": ["src/", "scripts/", "*.ts", "*.js", "*.json", "*.md"],
+    "exclude": ["dist/", "node_modules/"],
+    "options": {
+      "useTabs": false,
+      "lineWidth": 80,
+      "indentWidth": 2,
+      "semiColons": true,
+      "singleQuote": false,
+      "proseWrap": "preserve"
+    }
+  },
+  "test": {
+    "include": ["src/**/*_test.ts", "src/**/*.test.ts"],
+    "exclude": ["dist/", "node_modules/"]
+  },
+  "imports": {
+    "@std/": "https://deno.land/std@0.224.0/"
+  }
+}

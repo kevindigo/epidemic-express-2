@@ -17,22 +17,22 @@ body {
 .game-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
   min-height: 100vh;
 }
 
 /* Header */
 .game-header {
   background: white;
-  padding: 20px;
+  padding: 15px;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 10px;
 }
 
 .game-header h1 {
@@ -79,30 +79,30 @@ body {
 /* Panels */
 .panel {
   background: white;
-  padding: 20px;
+  padding: 15px;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .panel h3 {
   color: #2c3e50;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   font-size: 1.3rem;
   border-bottom: 2px solid #ecf0f1;
-  padding-bottom: 8px;
+  padding-bottom: 6px;
 }
 
 /* Disease Panel */
 .disease-panel .disease-levels {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 8px;
 }
 
 .disease-item {
   text-align: center;
-  padding: 10px;
+  padding: 8px;
   background: #f8f9fa;
   border-radius: 8px;
   transition: transform 0.2s ease;
@@ -114,7 +114,7 @@ body {
 
 .disease-icon {
   position: relative;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
 .disease-icon img {
@@ -166,7 +166,7 @@ body {
 .role-info {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
 }
 
 .role-image img {
@@ -196,9 +196,9 @@ body {
 .dice-container {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .die {
@@ -276,11 +276,11 @@ body {
 /* Message Panel */
 .message-content {
   background: #ecf0f1;
-  padding: 15px;
+  padding: 12px;
   border-radius: 8px;
-  font-size: 1rem;
-  line-height: 1.5;
-  min-height: 60px;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  min-height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -289,24 +289,24 @@ body {
 .victory-message {
   background: #27ae60;
   color: white;
-  padding: 15px;
+  padding: 12px;
   border-radius: 8px;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: bold;
-  margin-top: 10px;
+  margin-top: 8px;
   animation: pulse 2s infinite;
 }
 
 .defeat-message {
   background: #e74c3c;
   color: white;
-  padding: 15px;
+  padding: 12px;
   border-radius: 8px;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: bold;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 /* Treatment hint */
@@ -314,7 +314,7 @@ body {
   text-align: center;
   color: #7f8c8d;
   font-size: 0.9rem;
-  margin-top: 10px;
+  margin-top: 8px;
   font-style: italic;
 }
 
@@ -400,15 +400,15 @@ body {
 }
 
 .rules-body {
-  padding: 30px;
+  padding: 20px;
 }
 
 .rules-body h3 {
   color: #2c3e50;
-  margin: 25px 0 15px 0;
+  margin: 20px 0 12px 0;
   font-size: 1.2rem;
   border-bottom: 2px solid #ecf0f1;
-  padding-bottom: 8px;
+  padding-bottom: 6px;
 }
 
 .rules-body h3:first-child {
@@ -416,19 +416,19 @@ body {
 }
 
 .rules-body p {
-  margin-bottom: 20px;
-  line-height: 1.6;
+  margin-bottom: 15px;
+  line-height: 1.5;
 }
 
 .rules-body ol,
 .rules-body ul {
-  margin-bottom: 20px;
-  padding-left: 20px;
+  margin-bottom: 15px;
+  padding-left: 18px;
 }
 
 .rules-body li {
-  margin-bottom: 8px;
-  line-height: 1.5;
+  margin-bottom: 6px;
+  line-height: 1.4;
 }
 
 .rules-body strong {

@@ -26,6 +26,7 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./dist
-        # Depending on your setup, you can specify the pages repo and branch like:
-        # target_repo: kevindigo/your-pages-repo
-        # destination_branch: main
+        target_repo: kevindigo/kevindigo.github.io
+        destination_branch: main
+        destination_dir: epidemic-express-2
+        

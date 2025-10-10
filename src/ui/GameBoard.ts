@@ -95,6 +95,7 @@ export class GameBoard {
           <h3>Credits and copyright:</h3>
           <ul>
             <li>This software implementation is Copyright 2025 by Kevin B. Smith</li>
+            <li><i>NOTE: This app was developed with AI assistance.</i></li>
             <li>Original game Copyright 2010 by Kevin B. Smith</li>
             <li>Art selected by Todd Sanders</li>
             <li>For more information about this game, see the

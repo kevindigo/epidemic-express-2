@@ -25,8 +25,7 @@ jobs:
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        external_repository: kevindigo/kevindigo.github.io
+        publish_branch: main
         publish_dir: ./dist
-        target_repo: kevindigo/kevindigo.github.io
-        destination_branch: main
-        destination_dir: epidemic-express-2
-        
+        destination_dir: epidemic-express-2        

@@ -79,19 +79,27 @@ export class GameBoard {
             <li><strong>Medic:</strong> Avoid one disease level increase</li>
             <li><strong>Researcher:</strong> Get an extra treatment roll</li>
             <li><strong>PR Expert:</strong> Cure disease with 3-of-a-kind</li>
-            <li><strong>Scientist:</strong> Cure disease with Full House</li>
+            <li><strong>Scientist:</strong> Cure disease with a Full House</li>
             <li><strong>Epidemiologist:</strong> Re-roll Panics without penalty</li>
             <li><strong>Bio-terrorist:</strong> All disease levels increase</li>
           </ul>
           
-          <h3>Game Mechanics:</h3>
+          <h3>Game Mechanisms:</h3>
           <ul>
             <li><strong>Infection Phase:</strong> Roll dice equal to infection rate, apply disease increases</li>
-            <li><strong>Treatment Phase:</strong> Roll 5 dice, save dice you want to keep, re-roll others</li>
             <li><strong>Panic:</strong> Increases when 3+ panic dice appear in infection phase</li>
-            <li><strong>Curing Diseases:</strong> Need 4-of-a-kind (3-of-a-kind for PR Expert, Full House for Scientist)</li>
-            <li><strong>Re-rolls:</strong> Researcher gets 2 re-rolls, others get 1</li>
+            <li><strong>Treatment Phase:</strong> Roll 5 dice, save dice you want to keep, re-roll others</li>
+            <li><strong>Curing Diseases:</strong> Need 4-of-a-kind (roles can change that)</li>
+            <li><strong>Re-rolls:</strong> Researcher gets 3 re-rolls, others get 2</li>
           </ul>
+        </div>
+        <div class="rules-footer">
+          <p>Copyright 2010 by Kevin B. Smith<br/>
+            &nbsp;&nbsp;Art by Todd Sanders</p>
+          <p>For more information about this game, see the
+              <a href='http://boardgamegeek.com/boardgame/85804/epidemic-express'>Epidemic Express</a>
+              page on <a href='http://boardgamegeek.com'>BoardGameGeek</a></p>
+          <p>This software implementation is Copyright 2025 by Kevin B. Smith</p>
         </div>
       </div>
     `;
@@ -130,7 +138,7 @@ export class GameBoard {
         <header class="game-header">
           <h1>Epidemic Express</h1>
           <div class="game-controls">
-            <button id="rules-btn" class="btn btn-secondary">Rules</button>
+            <button id="rules-btn" class="btn btn-secondary">Rules/About</button>
             <button id="new-game-btn" class="btn btn-primary">New Game</button>
           </div>
         </header>

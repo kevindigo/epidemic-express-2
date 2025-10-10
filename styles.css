@@ -497,6 +497,11 @@ body {
   color: #2c3e50;
 }
 
+.rules-footer {
+  padding: 20px;
+  align-items: center;
+}
+
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }

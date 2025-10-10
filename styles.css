@@ -66,15 +66,7 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.btn-secondary {
-  background: #95a5a6;
-  color: white;
-}
 
-.btn-secondary:hover {
-  background: #7f8c8d;
-  transform: translateY(-2px);
-}
 
 /* Panels */
 .panel {

@@ -140,7 +140,7 @@ export class GameBoard {
         <header class="game-header">
           <h1>Epidemic Express</h1>
           <div class="game-controls">
-            <button id="rules-btn" class="btn btn-secondary">Rules/About</button>
+            <button id="rules-btn" class="btn btn-primary">Rules/About</button>
             <button id="new-game-btn" class="btn btn-primary">New Game</button>
           </div>
         </header>

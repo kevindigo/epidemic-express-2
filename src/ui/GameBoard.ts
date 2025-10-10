@@ -92,14 +92,15 @@ export class GameBoard {
             <li><strong>Curing Diseases:</strong> Need 4-of-a-kind (roles can change that)</li>
             <li><strong>Re-rolls:</strong> Researcher gets 3 re-rolls, others get 2</li>
           </ul>
-        </div>
-        <div class="rules-footer">
-          <p>Copyright 2010 by Kevin B. Smith<br/>
-            &nbsp;&nbsp;Art by Todd Sanders</p>
-          <p>For more information about this game, see the
-              <a href='http://boardgamegeek.com/boardgame/85804/epidemic-express'>Epidemic Express</a>
-              page on <a href='http://boardgamegeek.com'>BoardGameGeek</a></p>
-          <p>This software implementation is Copyright 2025 by Kevin B. Smith</p>
+          <h3>Credits and copyright:</h3>
+          <ul>
+            <li>This software implementation is Copyright 2025 by Kevin B. Smith</li>
+            <li>Original game Copyright 2010 by Kevin B. Smith</li>
+            <li>Art selected by Todd Sanders</li>
+            <li>For more information about this game, see the
+                <a href='http://boardgamegeek.com/boardgame/85804/epidemic-express'>Epidemic Express</a>
+                page on BGG</li>
+          </ul>
         </div>
       </div>
     `;

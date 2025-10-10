@@ -308,13 +308,23 @@ export class GameEngine {
       return true;
     }
     
-    // Scientist can cure with full house (3 of one + 2 of another)
+    // Scientist can cure with full house (3 of one + 2 of another or 2 of one + 3 of another)
     if (this.state.currentRole === Role.SCIENTIST) {
-      if (count < 3) return false;
+      // Check for 3 of current disease + 2 of another disease
+      if (count >= 3) {
+        for (let otherDisease = 0; otherDisease < 6; otherDisease++) {
+          if (otherDisease !== disease && counts[otherDisease as Disease] === 2) {
+            return true;
+          }
+        }
+      }
       
-      for (let otherDisease = 0; otherDisease < 6; otherDisease++) {
-        if (otherDisease !== disease && counts[otherDisease as Disease] === 2) {
-          return true;
+      // Check for 2 of current disease + 3 of another disease
+      if (count === 2) {
+        for (let otherDisease = 0; otherDisease < 6; otherDisease++) {
+          if (otherDisease !== disease && counts[otherDisease as Disease] === 3) {
+            return true;
+          }
         }
       }
     }

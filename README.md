@@ -100,6 +100,11 @@ epidemic-express-pwa/
 │   └── main.ts        # Application entry point
 ├── assets/images/     # Game assets
 ├── scripts/           # Build and dev scripts
+├── dist/              # Built files for deployment
+├── deno.json          # Deno configuration and tasks
+├── deno.lock          # Dependency lock file
+├── esbuild.config.js  # ESBuild configuration
+├── test-build.js      # Build testing script
 ├── styles.css         # All styling
 ├── index.html         # Main HTML file
 ├── manifest.json      # PWA manifest
@@ -108,8 +113,10 @@ epidemic-express-pwa/
 
 ## Game Rules
 
-For detailed game rules, click the "Rules" button in the game interface or refer to the original `rules.html` file.
+For detailed game rules, click the "Rules" button in the game interface.
 
 ## License
+
+This project is licensed under the GNU General Public License v3.0. See [LICENSE.md](LICENSE.md) for full details.
 
 This project is based on the original Epidemic Express game by Kevin B. Smith, Copyright 2010.

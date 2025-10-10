@@ -224,6 +224,7 @@ export class GameBoard {
           `).join('')}
         </div>
         <button id="confirm-infection-btn" class="btn btn-primary">Confirm Infection</button>
+        <p class="treatment-hint" style="visibility: hidden;">&nbsp;</p>
       </div>
     `;
   }

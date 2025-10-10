@@ -2,7 +2,7 @@
 
 declare const self: ServiceWorkerGlobalScope;
 
-const CACHE_NAME = 'epidemic-express-v1';
+const CACHE_NAME = 'epidemic-express-v2';
 const urlsToCache = [
   '/',
   '/index.html',

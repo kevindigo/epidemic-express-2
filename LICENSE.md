@@ -1,5 +1,5 @@
-### sample-epidemic-express
-Copyright (C) 2015  Kevin B. Smith
+### Epidemic Expres 2
+Copyright (C) 2025  Kevin B. Smith
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License version 3, as published by

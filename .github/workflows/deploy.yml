@@ -25,7 +25,6 @@ jobs:
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        external_repository: kevindigo/kevindigo.github.io
-        publish_branch: main
+        publish_branch: gh-pages
         publish_dir: ./dist
-        destination_dir: epidemic-express-2        
+        keep_files: false            # overwrite old files 

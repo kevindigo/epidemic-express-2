@@ -25,7 +25,6 @@ jobs:
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
         publish_dir: ./dist
-        # Depending on your setup, you can specify the pages repo and branch like:
-        # target_repo: kevindigo/your-pages-repo
-        # destination_branch: main
+        keep_files: false            # overwrite old files 

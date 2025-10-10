@@ -98,7 +98,6 @@ body {
   padding: 2px;
   background: transparent;
   border-radius: 8px;
-  transition: transform 0.2s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -107,9 +106,7 @@ body {
   min-width: 0;
 }
 
-.disease-item:hover {
-  transform: translateY(-2px);
-}
+
 
 .disease-icon {
   position: relative;

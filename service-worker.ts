@@ -3,7 +3,7 @@
 declare const self: ServiceWorkerGlobalScope;
 
 // Dynamic cache name with version for automatic cache management
-const CACHE_VERSION = 'v1.0.2';
+const CACHE_VERSION = 'v1.0.3';
 const CACHE_NAME = `epidemic-express-${CACHE_VERSION}`;
 
 // Helper function to get the correct base path for the current deployment

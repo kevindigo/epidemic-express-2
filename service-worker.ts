@@ -2,7 +2,8 @@
 
 declare const self: ServiceWorkerGlobalScope;
 
-const CACHE_NAME = 'epidemic-express-v2.0.1';
+// Dynamic cache name with timestamp for automatic versioning
+const CACHE_NAME = `epidemic-express-${Date.now()}`;
 const urlsToCache = [
   '/',
   '/index.html',
@@ -70,12 +71,25 @@ self.addEventListener('fetch', (event) => {
     return;
   }
   
-  // For all other requests, use cache-first strategy
+  // For all other requests, use cache-first strategy with network update
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
-        // Return cached version or fetch from network
-        return response || fetch(event.request);
+        // Return cached version immediately
+        const fetchPromise = fetch(event.request).then((networkResponse) => {
+          // Update cache with fresh response
+          if (networkResponse.ok) {
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, networkResponse.clone());
+            });
+          }
+          return networkResponse;
+        }).catch(() => {
+          // Network failed, return cached response
+          return response;
+        });
+        
+        return response || fetchPromise;
       })
   );
 });

@@ -33,10 +33,9 @@ if ('serviceWorker' in navigator) {
           if (newWorker) {
             newWorker.addEventListener('statechange', () => {
               if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                // New content is available, show update notification
-                if (confirm('New version available! Reload to update?')) {
-                  globalThis.location.reload();
-                }
+                // New content is available - auto-reload for seamless update
+                console.log('New version detected, auto-reloading...');
+                globalThis.location.reload();
               }
             });
           }

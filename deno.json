@@ -13,7 +13,9 @@
     "typecheck": "deno check src/",
     "clean": "deno run --allow-read --allow-write --allow-env scripts/clean.ts",
     "bundle": "deno run --allow-read --allow-write --allow-net scripts/build.ts",
-    "bundle-sw": "echo 'Service worker bundling is now part of the main build process'"
+    "bundle-sw": "echo 'Service worker bundling is now part of the main build process'",
+    "deploy": "deno task build && echo '🚀 Ready to deploy! Push to GitHub or run: git subtree push --prefix dist origin gh-pages'",
+    "gh-pages": "deno task build && git add dist && git commit -m 'Deploy to GitHub Pages' && git subtree push --prefix dist origin gh-pages"
   },
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "deno.ns", "es2022"],

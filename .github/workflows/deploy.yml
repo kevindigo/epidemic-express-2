@@ -20,16 +20,15 @@ jobs:
 
     - name: Setup Deno
       uses: denoland/setup-deno@v1
-      with:
-        deno-version: v1.x
 
     - name: Show Deno version
       run: deno --version
 
     - name: Build PWA
       run: |
-        # Remove lockfile and build
+        # Remove lockfile to avoid version conflicts
         rm -f deno.lock
+        # Build the application
         deno run --allow-read --allow-write --allow-run --allow-net --allow-env scripts/build.ts
 
     - name: Setup Pages

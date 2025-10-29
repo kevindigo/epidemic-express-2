@@ -2,6 +2,16 @@ import { GameBoard } from './ui/GameBoard.ts';
 
 // Initialize the game when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+  // Handle redirect from 404.html
+  if (sessionStorage.redirect) {
+    const redirect = sessionStorage.redirect;
+    delete sessionStorage.redirect;
+    
+    // You could handle the redirect path here if needed
+    // For now, we just clear it and continue with normal app initialization
+    console.log('Redirected from:', redirect);
+  }
+  
   const app = document.getElementById('app');
   if (app) {
     new GameBoard(app);

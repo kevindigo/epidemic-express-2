@@ -59,6 +59,18 @@ self.addEventListener('activate', (event) => {
 
 // Fetch event - serve from cache, fall back to network
 self.addEventListener('fetch', (event) => {
+  // Handle navigation requests (HTML pages) by serving index.html
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      caches.match('/index.html')
+        .then((response) => {
+          return response || fetch('/index.html');
+        })
+    );
+    return;
+  }
+  
+  // For all other requests, use cache-first strategy
   event.respondWith(
     caches.match(event.request)
       .then((response) => {

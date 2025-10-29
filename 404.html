@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting...</title>
+    <script>
+        // Store the current path and redirect to index.html
+        sessionStorage.redirect = location.pathname;
+        location.replace('/' + (location.pathname.startsWith('/epidemic-express-2/') ? '' : 'epidemic-express-2/'));
+    </script>
+</head>
+<body>
+    <p>Redirecting to Epidemic Express...</p>
+</body>
+</html>

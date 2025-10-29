@@ -3,32 +3,43 @@
 declare const self: ServiceWorkerGlobalScope;
 
 // Dynamic cache name with version for automatic cache management
-const CACHE_VERSION = 'v1.0.0';
+const CACHE_VERSION = 'v1.0.1';
 const CACHE_NAME = `epidemic-express-${CACHE_VERSION}`;
+
+// Base path detection for different deployment scenarios
+const getBasePath = () => {
+  if (self.location.pathname.startsWith('/epidemic-express-2/')) {
+    return '/epidemic-express-2/';
+  }
+  return '/';
+};
+
+const basePath = getBasePath();
+
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/main.js',
-  '/manifest.json',
+  basePath,
+  `${basePath}index.html`,
+  `${basePath}styles.css`,
+  `${basePath}main.js`,
+  `${basePath}manifest.json`,
   
   // Game images
-  '/assets/images/avian.png',
-  '/assets/images/swine.png',
-  '/assets/images/sars.png',
-  '/assets/images/smallpox.png',
-  '/assets/images/ebola.png',
-  '/assets/images/panic.png',
-  '/assets/images/medic.png',
-  '/assets/images/researcher.png',
-  '/assets/images/prexpert.png',
-  '/assets/images/scientist.png',
-  '/assets/images/epidemiologist.png',
-  '/assets/images/bioterrorist.png',
-  '/assets/images/shot.png',
-  '/assets/images/lost.png',
-  '/assets/images/checkmark.png',
-  '/assets/images/board.png'
+  `${basePath}assets/images/avian.png`,
+  `${basePath}assets/images/swine.png`,
+  `${basePath}assets/images/sars.png`,
+  `${basePath}assets/images/smallpox.png`,
+  `${basePath}assets/images/ebola.png`,
+  `${basePath}assets/images/panic.png`,
+  `${basePath}assets/images/medic.png`,
+  `${basePath}assets/images/researcher.png`,
+  `${basePath}assets/images/prexpert.png`,
+  `${basePath}assets/images/scientist.png`,
+  `${basePath}assets/images/epidemiologist.png`,
+  `${basePath}assets/images/bioterrorist.png`,
+  `${basePath}assets/images/shot.png`,
+  `${basePath}assets/images/lost.png`,
+  `${basePath}assets/images/checkmark.png`,
+  `${basePath}assets/images/board.png`
 ];
 
 // Install event - cache all required assets
@@ -97,8 +108,13 @@ self.addEventListener('fetch', (event) => {
         })
         .catch((error) => {
           console.log('Service Worker: Navigation network fetch failed, using cache:', error);
-          // Network failed, serve from cache
-          return caches.match('/index.html');
+          // Network failed, serve index.html from cache
+          // Handle both deployment scenarios
+          if (location.pathname.startsWith('/epidemic-express-2/')) {
+            return caches.match('/epidemic-express-2/index.html');
+          } else {
+            return caches.match('/index.html');
+          }
         })
     );
     return;
@@ -158,7 +174,11 @@ self.addEventListener('fetch', (event) => {
             // Network failed and not in cache
             // For HTML requests, fall back to index.html
             if (request.headers.get('accept')?.includes('text/html')) {
-              return caches.match('/index.html');
+              if (self.location.pathname.startsWith('/epidemic-express-2/')) {
+                return caches.match('/epidemic-express-2/index.html');
+              } else {
+                return caches.match('/index.html');
+              }
             }
             return new Response('Network error happened', {
               status: 408,

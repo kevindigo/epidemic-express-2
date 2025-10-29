@@ -4,8 +4,18 @@
     <title>Redirecting...</title>
     <script>
         // Store the current path and redirect to index.html
+        // Handle both GitHub Pages deployment and local installation
         sessionStorage.redirect = location.pathname;
-        location.replace('/' + (location.pathname.startsWith('/epidemic-express-2/') ? '' : 'epidemic-express-2/'));
+        
+        // Check if we're on GitHub Pages (has repository name in path)
+        // or local installation (root path)
+        if (location.pathname.startsWith('/epidemic-express-2/')) {
+            // GitHub Pages deployment
+            location.replace('/epidemic-express-2/');
+        } else {
+            // Local installation or root deployment
+            location.replace('/');
+        }
     </script>
 </head>
 <body>

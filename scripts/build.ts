@@ -104,6 +104,16 @@ async function updateHTMLForProduction(): Promise<void> {
     '<script type="module" src="./main.js"></script>'
   );
   
+  // Update icon paths to use relative paths
+  content = content.replace(
+    'href="assets/images/board.png"',
+    'href="./assets/images/board.png"'
+  );
+  content = content.replace(
+    'href="assets/images/board.png"',
+    'href="./assets/images/board.png"'
+  );
+  
   await Deno.writeTextFile(htmlPath, content);
   console.log(`✅ HTML updated for production`);
 }

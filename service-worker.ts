@@ -3,14 +3,20 @@
 declare const self: ServiceWorkerGlobalScope;
 
 // Dynamic cache name with version for automatic cache management
-const CACHE_VERSION = 'v1.0.1';
+const CACHE_VERSION = 'v1.0.2';
 const CACHE_NAME = `epidemic-express-${CACHE_VERSION}`;
 
-// Base path detection for different deployment scenarios
+// Helper function to get the correct base path for the current deployment
 const getBasePath = () => {
-  if (self.location.pathname.startsWith('/epidemic-express-2/')) {
+  // Get the service worker's scope to determine the base path
+  const scope = self.registration.scope;
+  const url = new URL(scope);
+  
+  // If the scope includes the GitHub Pages repository name, use that path
+  if (url.pathname.includes('/epidemic-express-2/')) {
     return '/epidemic-express-2/';
   }
+  // Otherwise, use root path for local installation
   return '/';
 };
 
@@ -45,6 +51,7 @@ const urlsToCache = [
 // Install event - cache all required assets
 self.addEventListener('install', (event) => {
   console.log('Service Worker: Installing...');
+  console.log('Service Worker: Base path detected as:', basePath);
   
   // Skip waiting to activate immediately
   self.skipWaiting();
@@ -53,6 +60,7 @@ self.addEventListener('install', (event) => {
     caches.open(CACHE_NAME)
       .then((cache) => {
         console.log('Service Worker: Opened cache', CACHE_NAME);
+        console.log('Service Worker: Caching URLs:', urlsToCache);
         return cache.addAll(urlsToCache);
       })
   );
@@ -88,8 +96,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const request = event.request;
   
-  // For navigation requests, use network-first strategy
-  // This ensures fresh content loads on first visit
+  // For navigation requests, always serve index.html for SPA routing
   if (request.mode === 'navigate') {
     console.log('Service Worker: Handling navigation request:', request.url);
     
@@ -107,14 +114,9 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch((error) => {
-          console.log('Service Worker: Navigation network fetch failed, using cache:', error);
-          // Network failed, serve index.html from cache
-          // Handle both deployment scenarios
-          if (location.pathname.startsWith('/epidemic-express-2/')) {
-            return caches.match('/epidemic-express-2/index.html');
-          } else {
-            return caches.match('/index.html');
-          }
+          console.log('Service Worker: Navigation network fetch failed, serving index.html:', error);
+          // Network failed, always serve index.html for SPA
+          return caches.match(`${basePath}index.html`);
         })
     );
     return;
@@ -174,11 +176,7 @@ self.addEventListener('fetch', (event) => {
             // Network failed and not in cache
             // For HTML requests, fall back to index.html
             if (request.headers.get('accept')?.includes('text/html')) {
-              if (self.location.pathname.startsWith('/epidemic-express-2/')) {
-                return caches.match('/epidemic-express-2/index.html');
-              } else {
-                return caches.match('/index.html');
-              }
+              return caches.match(`${basePath}index.html`);
             }
             return new Response('Network error happened', {
               status: 408,

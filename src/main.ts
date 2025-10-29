@@ -3,6 +3,8 @@ import { GameBoard } from './ui/GameBoard.ts';
 // Initialize the game when DOM is loaded
 function initializeApp() {
   console.log('Initializing app...');
+  console.log('Current URL:', window.location.href);
+  console.log('Service Worker controller:', navigator.serviceWorker?.controller);
   
   // Handle redirect from 404.html
   if (sessionStorage['redirect']) {
@@ -42,7 +44,10 @@ if ('serviceWorker' in navigator) {
   console.log('Service Worker API available, registering immediately...');
   
   // Register service worker immediately, don't wait for load event
-  navigator.serviceWorker.register('./service-worker.js')
+  // Use relative path to ensure it works in both deployment scenarios
+  navigator.serviceWorker.register('service-worker.js', {
+    scope: './'
+  })
     .then((registration) => {
       console.log('ServiceWorker registration successful:', registration);
       

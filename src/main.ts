@@ -1,7 +1,9 @@
 import { GameBoard } from './ui/GameBoard.ts';
 
 // Initialize the game when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
+function initializeApp() {
+  console.log('Initializing app...');
+  
   // Handle redirect from 404.html
   if (sessionStorage['redirect']) {
     const redirect = sessionStorage['redirect'];
@@ -14,37 +16,64 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const app = document.getElementById('app');
   if (app) {
+    console.log('Found app element, creating GameBoard...');
     new GameBoard(app);
+    console.log('GameBoard created successfully');
   } else {
     console.error('Could not find app element');
   }
-});
+}
+
+// Check if DOM is already loaded
+if (document.readyState === 'loading') {
+  // DOM is still loading, wait for DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOMContentLoaded fired - initializing app...');
+    initializeApp();
+  });
+} else {
+  // DOM is already loaded, initialize immediately
+  console.log('DOM already loaded - initializing app immediately...');
+  initializeApp();
+}
 
 // Handle service worker updates
 if ('serviceWorker' in navigator) {
-  globalThis.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then((registration) => {
-        console.log('ServiceWorker registration successful');
+  console.log('Service Worker API available, registering immediately...');
+  
+  // Register service worker immediately, don't wait for load event
+  navigator.serviceWorker.register('./service-worker.js')
+    .then((registration) => {
+      console.log('ServiceWorker registration successful:', registration);
+      
+      // Check if service worker is already controlling the page
+      if (navigator.serviceWorker.controller) {
+        console.log('Service Worker is already controlling the page');
+      } else {
+        console.log('Service Worker is not yet controlling the page');
+      }
+      
+      // Check for updates
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        console.log('Service Worker update found:', newWorker);
         
-        // Check for updates
-        registration.addEventListener('updatefound', () => {
-          const newWorker = registration.installing;
-          if (newWorker) {
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                // New content is available - auto-reload for seamless update
-                console.log('New version detected, auto-reloading...');
-                globalThis.location.reload();
-              }
-            });
-          }
-        });
-      })
-      .catch((error) => {
-        console.log('ServiceWorker registration failed: ', error);
+        if (newWorker) {
+          newWorker.addEventListener('statechange', () => {
+            console.log('Service Worker state changed:', newWorker.state);
+            
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // New content is available - auto-reload for seamless update
+              console.log('New version detected, auto-reloading...');
+              globalThis.location.reload();
+            }
+          });
+        }
       });
-  });
+    })
+    .catch((error) => {
+      console.log('ServiceWorker registration failed: ', error);
+    });
 }
 
 // Handle app installation

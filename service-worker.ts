@@ -2,8 +2,9 @@
 
 declare const self: ServiceWorkerGlobalScope;
 
-// Dynamic cache name with timestamp for automatic versioning
-const CACHE_NAME = `epidemic-express-${Date.now()}`;
+// Dynamic cache name with version for automatic cache management
+const CACHE_VERSION = 'v1.0.0';
+const CACHE_NAME = `epidemic-express-${CACHE_VERSION}`;
 const urlsToCache = [
   '/',
   '/index.html',
@@ -32,64 +33,138 @@ const urlsToCache = [
 
 // Install event - cache all required assets
 self.addEventListener('install', (event) => {
+  console.log('Service Worker: Installing...');
+  
+  // Skip waiting to activate immediately
+  self.skipWaiting();
+  
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('Opened cache');
+        console.log('Service Worker: Opened cache', CACHE_NAME);
         return cache.addAll(urlsToCache);
       })
   );
 });
 
-// Activate event - clean up old caches
+// Activate event - clean up old caches and claim clients
 self.addEventListener('activate', (event) => {
+  console.log('Service Worker: Activating...');
+  
   event.waitUntil(
     caches.keys().then((cacheNames) => {
+      console.log('Service Worker: Found caches:', cacheNames);
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('Deleting old cache:', cacheName);
+          // Delete old caches that don't match our current version
+          if (!cacheName.includes(CACHE_VERSION)) {
+            console.log('Service Worker: Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
+          console.log('Service Worker: Keeping cache:', cacheName);
           return undefined;
         })
       );
+    }).then(() => {
+      // Claim all clients to ensure service worker controls them immediately
+      console.log('Service Worker: Claiming clients...');
+      return self.clients.claim();
     })
   );
 });
 
 // Fetch event - serve from cache, fall back to network
 self.addEventListener('fetch', (event) => {
-  // Handle navigation requests (HTML pages) by serving index.html
-  if (event.request.mode === 'navigate') {
+  const request = event.request;
+  
+  // For navigation requests, use network-first strategy
+  // This ensures fresh content loads on first visit
+  if (request.mode === 'navigate') {
+    console.log('Service Worker: Handling navigation request:', request.url);
+    
     event.respondWith(
-      caches.match('/index.html')
+      fetch(request)
         .then((response) => {
-          return response || fetch('/index.html');
+          console.log('Service Worker: Navigation network fetch succeeded');
+          // Cache the fresh response
+          if (response.ok) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(request, responseClone);
+            });
+          }
+          return response;
+        })
+        .catch((error) => {
+          console.log('Service Worker: Navigation network fetch failed, using cache:', error);
+          // Network failed, serve from cache
+          return caches.match('/index.html');
         })
     );
     return;
   }
   
-  // For all other requests, use cache-first strategy with network update
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Return cached version immediately
-        const fetchPromise = fetch(event.request).then((networkResponse) => {
-          // Update cache with fresh response
-          if (networkResponse.ok) {
+  // For JavaScript files, use network-first to ensure latest code
+  if (request.url.includes('.js')) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          if (response.ok) {
+            const responseClone = response.clone();
             caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, networkResponse.clone());
+              cache.put(request, responseClone);
             });
           }
-          return networkResponse;
-        }).catch(() => {
-          // Network failed, return cached response
           return response;
-        });
+        })
+        .catch(() => caches.match(request))
+    );
+    return;
+  }
+  
+  // For all other requests (images, CSS, etc.), use cache-first with network update
+  event.respondWith(
+    caches.match(request)
+      .then((response) => {
+        // Return cached version if available
+        if (response) {
+          // Update cache in background
+          fetch(request)
+            .then((networkResponse) => {
+              if (networkResponse.ok) {
+                caches.open(CACHE_NAME).then((cache) => {
+                  cache.put(request, networkResponse.clone());
+                });
+              }
+            })
+            .catch(() => {
+              // Ignore network errors for background updates
+            });
+          return response;
+        }
         
-        return response || fetchPromise;
+        // Not in cache, fetch from network
+        return fetch(request)
+          .then((networkResponse) => {
+            if (networkResponse.ok) {
+              const responseClone = networkResponse.clone();
+              caches.open(CACHE_NAME).then((cache) => {
+                cache.put(request, responseClone);
+              });
+            }
+            return networkResponse;
+          })
+          .catch(() => {
+            // Network failed and not in cache
+            // For HTML requests, fall back to index.html
+            if (request.headers.get('accept')?.includes('text/html')) {
+              return caches.match('/index.html');
+            }
+            return new Response('Network error happened', {
+              status: 408,
+              headers: { 'Content-Type': 'text/plain' },
+            });
+          });
       })
   );
 });

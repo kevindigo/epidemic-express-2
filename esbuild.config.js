@@ -6,38 +6,38 @@ import { denoPlugins } from 'https://deno.land/x/esbuild_deno_loader@0.8.2/mod.t
  * Properly transpiles TypeScript to JavaScript for browser compatibility
  */
 
-const config = {
-  entryPoints: [
-    'src/main.ts',
-    'service-worker.ts'
-  ],
-  bundle: true, // Bundle all dependencies into single files
-  outdir: 'dist',
-  format: 'esm',
-  platform: 'browser',
-  target: 'es2020',
-  sourcemap: true,
-  minify: false, // Keep readable for debugging
-  
-  // TypeScript configuration
-  loader: {
-    '.ts': 'ts',
-    '.js': 'js',
-  },
-  
-  // Plugins for Deno compatibility
-  plugins: [...denoPlugins()],
-  
-  // Preserve directory structure
-  outbase: 'src',
-};
-
 // Build function
 export async function build() {
   console.log('🏗️  Building Epidemic Express with ESBuild...');
   
   try {
-    const result = await esbuild.build(config);
+    const result = await esbuild.build({
+      entryPoints: [
+        'src/main.ts',
+        'service-worker.ts'
+      ],
+      bundle: true, // Bundle all dependencies into single files
+      outdir: 'dist',
+      format: 'esm',
+      platform: 'browser',
+      target: 'es2020',
+      sourcemap: true,
+      minify: false, // Keep readable for debugging
+      
+      // TypeScript configuration
+      loader: {
+        '.ts': 'ts',
+        '.js': 'js',
+      },
+      
+      // Plugins for Deno compatibility
+      plugins: [...denoPlugins()],
+      
+      // Explicitly avoid preserving directory structure
+      outbase: '.',
+      entryNames: '[name]',
+    });
+    
     console.log('✅ Build completed successfully!');
     return result;
   } catch (error) {
@@ -56,8 +56,24 @@ export async function watch() {
   console.log('👀 Starting development build with watch mode...');
   
   const ctx = await esbuild.context({
-    ...config,
+    entryPoints: [
+      'src/main.ts',
+      'service-worker.ts'
+    ],
+    bundle: true,
+    outdir: 'dist',
+    format: 'esm',
+    platform: 'browser',
+    target: 'es2020',
     sourcemap: 'inline',
+    minify: false,
+    loader: {
+      '.ts': 'ts',
+      '.js': 'js',
+    },
+    plugins: [...denoPlugins()],
+    outbase: '.',
+    entryNames: '[name]',
   });
   
   await ctx.watch();
@@ -74,9 +90,24 @@ export async function buildProduction() {
   
   try {
     const result = await esbuild.build({
-      ...config,
-      minify: true,
+      entryPoints: [
+        'src/main.ts',
+        'service-worker.ts'
+      ],
+      bundle: true,
+      outdir: 'dist',
+      format: 'esm',
+      platform: 'browser',
+      target: 'es2020',
       sourcemap: false,
+      minify: true,
+      loader: {
+        '.ts': 'ts',
+        '.js': 'js',
+      },
+      plugins: [...denoPlugins()],
+      outbase: '.',
+      entryNames: '[name]',
     });
     
     console.log('✅ Production build completed!');

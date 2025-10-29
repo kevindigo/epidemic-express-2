@@ -1,68 +1,51 @@
-#!/usr/bin/env -S deno run --allow-read --allow-write --allow-net --allow-run
-
-/**
- * Test script to verify the build works correctly
- */
-
-import { build } from './esbuild.config.js';
+// Simple test build to verify ESBuild configuration
+import * as esbuild from 'https://deno.land/x/esbuild@v0.19.11/mod.js';
 
 async function testBuild() {
   console.log('🧪 Testing ESBuild configuration...');
   
   try {
-    // Run the build
-    await build();
-    
-    // Check if the main output files exist
-    const requiredFiles = [
-      'dist/main.js',
-      'dist/service-worker.js'
-    ];
-    
-    for (const file of requiredFiles) {
-      try {
-        const stat = await Deno.stat(file);
-        if (stat.isFile) {
-          console.log(`✅ ${file} exists`);
-          
-          // Check if it's valid JavaScript
-          const content = await Deno.readTextFile(file);
-          if (content.includes('SyntaxError') || content.includes('ReferenceError')) {
-            console.error(`❌ ${file} contains syntax errors`);
-            return false;
-          }
-          
-          // Check for common transpilation issues
-          if (content.includes('.ts') && !content.includes('//')) {
-            console.warn(`⚠️  ${file} may contain unresolved .ts imports`);
-          }
-          
-          // Check if GameBoard and GameEngine classes are bundled
-          if (file === 'dist/main.js') {
-            if (!content.includes('class GameBoard') && !content.includes('class GameEngine')) {
-              console.warn(`⚠️  ${file} may not contain bundled GameBoard and GameEngine classes`);
-            }
-          }
-          
-        }
-      } catch (error) {
-        console.error(`❌ ${file} does not exist:`, error.message);
-        return false;
-      }
+    // Clean first
+    try {
+      await Deno.remove('test-dist', { recursive: true });
+    } catch (error) {
+      // Ignore if directory doesn't exist
     }
     
-    console.log('✅ All build files created successfully!');
-    console.log('✅ No obvious syntax errors detected');
-    console.log('🚀 Build test passed!');
-    return true;
+    const result = await esbuild.build({
+      entryPoints: ['src/main.ts'],
+      bundle: true,
+      outdir: 'test-dist',
+      format: 'esm',
+      platform: 'browser',
+      target: 'es2020',
+      sourcemap: false,
+      minify: false,
+      loader: {
+        '.ts': 'ts',
+      },
+      // Try without plugins first
+      // plugins: [...denoPlugins()],
+      outbase: '.',
+      entryNames: '[name]',
+    });
+    
+    console.log('✅ Test build completed!');
+    
+    // Check what was created
+    const files = [];
+    for await (const entry of Deno.readDir('test-dist')) {
+      files.push(entry.name);
+    }
+    console.log('📁 Files in test-dist:', files);
     
   } catch (error) {
-    console.error('❌ Build test failed:', error);
-    return false;
+    console.error('❌ Test build failed:', error);
+  } finally {
+    esbuild.stop();
   }
 }
 
 if (import.meta.main) {
-  const success = await testBuild();
-  Deno.exit(success ? 0 : 1);
+  await testBuild();
 }

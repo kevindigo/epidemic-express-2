@@ -144,6 +144,44 @@ async function generateBuildInfo(): Promise<void> {
   console.log(`✅ Build information generated`);
 }
 
+async function fixBuildStructure(): Promise<void> {
+  console.log(`🔧 Fixing build structure...`);
+  
+  const srcPath = join(BUILD_DIR, "src");
+  
+  try {
+    // Check if src directory exists
+    const srcStat = await Deno.stat(srcPath);
+    if (!srcStat.isDirectory) {
+      console.log(`  ✅ No src directory found, structure is already correct`);
+      return;
+    }
+    
+    // Move files from dist/src/ to dist/
+    for await (const entry of Deno.readDir(srcPath)) {
+      const srcFile = join(srcPath, entry.name);
+      const destFile = join(BUILD_DIR, entry.name);
+      
+      await Deno.rename(srcFile, destFile);
+      console.log(`  📄 Moved: ${srcFile} → ${destFile}`);
+    }
+    
+    // Remove empty src directory
+    await Deno.remove(srcPath);
+    console.log(`  🗑️  Removed: ${srcPath}`);
+    
+    console.log(`✅ Build structure fixed!`);
+    
+  } catch (error) {
+    if (error instanceof Deno.errors.NotFound) {
+      console.log(`  ✅ No src directory found, structure is already correct`);
+    } else {
+      console.error(`❌ Failed to fix build structure:`, error);
+      throw error;
+    }
+  }
+}
+
 async function cleanBuildDirectory(): Promise<void> {
   console.log(`🧹 Cleaning build directory...`);
   
@@ -180,17 +218,20 @@ async function main(): Promise<void> {
     // Run type checking
     await runTypeCheck();
     
+    // Copy static assets FIRST (before ESBuild)
+    await copyStaticAssets();
+    
     // Transpile TypeScript files using ESBuild
     await runESBuild();
-    
-    // Copy static assets
-    await copyStaticAssets();
     
     // Copy UI directory structure
     await copyUIDirectory();
     
     // Update HTML for production
     await updateHTMLForProduction();
+    
+    // Fix ESBuild output structure if needed
+    await fixBuildStructure();
     
     // Generate build info
     await generateBuildInfo();

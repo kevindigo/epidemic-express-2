@@ -203,6 +203,17 @@ export class GameEngine {
       }
     }
     
+    // Lock all panic dice for non-epidemiologist roles
+    const isEpidemiologist = this.state.currentRole === Role.EPIDEMIOLOGIST;
+    if (!isEpidemiologist) {
+      for (let i = 0; i < 5; i++) {
+        if (this.state.treatmentDice[i] === Disease.PANIC) {
+          this.state.savedTreatmentDice[i] = true;
+          this.state.lockedTreatmentDice[i] = true;
+        }
+      }
+    }
+    
     this.checkGameOver();
     this.notifyListeners();
   }
@@ -211,9 +222,17 @@ export class GameEngine {
   toggleSaveDie(dieIndex: number): void {
     if (this.state.rerollsRemaining <= 0) return;
     
-    // Prevent unsaving locked dice (e.g., panic dice with penalty)
+    // Prevent toggling panic dice for non-epidemiologist roles
+    const isEpidemiologist = this.state.currentRole === Role.EPIDEMIOLOGIST;
+    if (!isEpidemiologist && this.state.treatmentDice[dieIndex] === Disease.PANIC) {
+      this.state.message = 'Cannot unsave panic die!';
+      this.notifyListeners();
+      return;
+    }
+    
+    // Prevent unsaving locked dice
     if (this.state.lockedTreatmentDice[dieIndex] && !this.state.savedTreatmentDice[dieIndex]) {
-      this.state.message = 'Cannot unsave locked panic die!';
+      this.state.message = 'Cannot unsave locked die!';
       this.notifyListeners();
       return;
     }

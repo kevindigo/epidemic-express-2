@@ -21,10 +21,15 @@ jobs:
     - name: Setup Deno
       uses: denoland/setup-deno@v1
       with:
-        deno-version: v1.x
+        deno-version: v1.47.0
+
+    - name: Show Deno version
+      run: deno --version
 
     - name: Build PWA
       run: |
+        # Regenerate lockfile with current Deno version
+        deno cache --reload --lock=deno.lock deno.json
         deno task build
 
     - name: Setup Pages

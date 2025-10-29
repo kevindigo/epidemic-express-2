@@ -2,21 +2,13 @@
 
 declare const self: ServiceWorkerGlobalScope;
 
-// Dynamic cache name with version for automatic cache management
-const CACHE_VERSION = 'v1.0.3';
-const CACHE_NAME = `epidemic-express-${CACHE_VERSION}`;
+// Dynamic cache name with timestamp for automatic cache management
+const CACHE_NAME = `epidemic-express-${Date.now()}`;
 
 // Helper function to get the correct base path for the current deployment
 const getBasePath = () => {
-  // Get the service worker's scope to determine the base path
-  const scope = self.registration.scope;
-  const url = new URL(scope);
-  
-  // If the scope includes the GitHub Pages repository name, use that path
-  if (url.pathname.includes('/epidemic-express-2/')) {
-    return '/epidemic-express-2/';
-  }
-  // Otherwise, use root path for local installation
+  // For PWA installations, always use root path
+  // This ensures consistent behavior regardless of deployment location
   return '/';
 };
 
@@ -75,8 +67,8 @@ self.addEventListener('activate', (event) => {
       console.log('Service Worker: Found caches:', cacheNames);
       return Promise.all(
         cacheNames.map((cacheName) => {
-          // Delete old caches that don't match our current version
-          if (!cacheName.includes(CACHE_VERSION)) {
+          // Delete all old caches except the current one
+          if (cacheName !== CACHE_NAME) {
             console.log('Service Worker: Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }

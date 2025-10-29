@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Epidemic Express</title>
+</head>
+<body>
+    <h1>Debug Page</h1>
+    <p>This is a debug page to test if the placeholder message appears here.</p>
+    <p>If you see "This is a pointless placeholder!" here, then it's being injected somewhere.</p>
+    
+    <div id="test-app">
+        <p>Test app content</p>
+    </div>
+    
+    <script>
+        console.log('Debug page loaded');
+        console.log('Current URL:', window.location.href);
+        console.log('Service Worker:', navigator.serviceWorker?.controller);
+        
+        // Check if placeholder appears in DOM
+        setTimeout(() => {
+            const appContent = document.getElementById('test-app').innerHTML;
+            console.log('App content:', appContent);
+            if (appContent.includes('pointless placeholder')) {
+                console.error('PLACEHOLDER FOUND IN DOM!');
+            }
+        }, 100);
+    </script>
+</body>
+</html>
